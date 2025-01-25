@@ -4,7 +4,7 @@ Scripts used for the rdeval manuscript.
 ## Compute raw reads summary statistics for the Vertebrate Genomes Project
 The following commands show how to access SRA accession numbers and metadata from NCBI, download the raw reads and generate summary statistics with rdeval. The process is heavily parallelized, with approximately 4 cores used by each rdeval process, and 8 experiments processed in parallel (32 cores total). SRA samples can optionally be randomly sampled.
 
-First, we can use [NCBI datasets]((https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/) and [jq](https://jqlang.github.io/jq/) to parse the VGP umbrella BioProject and collect all SRA accessions associated with its genomes (here is jq's [manual](https://jqlang.github.io/jq/manual/)):
+First, we can use [NCBI datasets](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/) and [jq](https://jqlang.github.io/jq/) to parse the VGP umbrella BioProject and collect all SRA accessions associated with its genomes (here is jq's [manual](https://jqlang.github.io/jq/manual/)):
 
 ```
 datasets summary genome accession PRJNA489243 > vgp-metadata.json
