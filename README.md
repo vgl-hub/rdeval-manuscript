@@ -17,3 +17,11 @@ Then we can download the data (requires `fasterq-dump` in `$PATH`) and compute s
 ```
 bash rdeval_parallel.sh raw_data_metadata.ls 0.5 // sampling fraction, 1 for full data set
 ```
+You can easily aggregate metrics from multiple .rd files by either:
+```
+rdeval *.rd
+```
+Or if they don't fit in memory (i.e. in the hundreds):
+```
+for file in *.rd; do rdeval --tab $file | cut -f2 | sed "1q;d"; done | awk '{sum += $1}END{print sum}' 
+```
