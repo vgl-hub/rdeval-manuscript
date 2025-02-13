@@ -1,6 +1,6 @@
 ### Generate the Data for Quality and Length Distribution Plot
 
-To generate the datasets for running the **quality and length distribution plot**, follow the instructions below:
+To generate the datasets for running the **quality and length distribution plots**, follow the instructions below:
 
 1. **Include the technology name** in the file name, separated by **dots** before the file extension.  
 
