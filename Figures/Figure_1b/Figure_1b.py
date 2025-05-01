@@ -5,7 +5,7 @@ import pandas as pd
 matplotlib.use('Agg')  # Use a non-GUI backend
 plt.rcParams['svg.fonttype'] = 'none'
 
-combined_df=pd.read_csv("combined_filetype_size.tsv",sep='\t',names=['Sample Name','Size', 'File Type','Sequencing Technology'])
+combined_df=pd.read_csv("new_combined_filetype_size.tsv",sep='\t',names=['Sample Name','Size', 'File Type','Sequencing Technology'])
 
 # Filter for Illumina data
 illumina_data = combined_df[combined_df["Sequencing Technology"].str.lower() == "illumina"]
@@ -35,7 +35,7 @@ fig, axes = plt.subplots(1, 2, figsize=(10, 10), sharey=True)
 sns.boxplot(
     data=illumina_data,
     x="File Type",
-    y="Size",
+    y=illumina_data["Size"]/1000000000,
     order=illumina_order,
     palette=["#154CAC"] * len(illumina_order),  
     ax=axes[0],
@@ -46,8 +46,8 @@ sns.boxplot(
     showfliers=False
 )
 axes[0].set_title("Illumina", fontsize=26)
-axes[0].set_ylabel("File size log$_{10}$(bytes)", fontsize=26)
-axes[0].set_yscale("log")
+axes[0].set_ylabel("File size (GB)", fontsize=26)
+#axes[0].set_yscale("log")
 axes[0].tick_params(axis='x', rotation=45,labelsize=26)
 axes[0].tick_params(axis='y', labelsize=26)
 
@@ -56,7 +56,7 @@ axes[0].tick_params(axis='y', labelsize=26)
 sns.boxplot(
     data=pacbio_data,
     x="File Type",
-    y="Size",
+    y=pacbio_data["Size"]/1000000000,
     order=pacbio_order,
     palette=["#EF476F"] * len(pacbio_order),
     ax=axes[1],
@@ -67,10 +67,12 @@ sns.boxplot(
     showfliers=False
 )
 axes[1].set_title("PacBio", fontsize=26)
-axes[1].set_ylabel("File size log$_{10}$(bytes)", fontsize=26)
+axes[1].set_ylabel("File size (GB)", fontsize=26)
 axes[1].tick_params(axis='x', rotation=45,labelsize=26)
 
 # Adjust layout for better spacing
 plt.tight_layout(rect=[0, 0, 1, 0.95])
+#plt.xticks(fontsize=22)
+#plt.yticks(fontsize=22)
 
 plt.savefig("Figure_1b.svg", format="svg",dpi=300)
