@@ -70,4 +70,4 @@ plt.yticks(fontsize=26)
 
 plt.tight_layout()
 plt.grid(False)
-plt.savefig("Figure_1f.svg", format="svg", dpi=300)
+plt.savefig("Figure_2f.svg", format="svg", dpi=300)

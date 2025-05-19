@@ -24,10 +24,10 @@ the_df["Downsampling"] = the_df["Downsampling"].astype(float)
 the_df['Sample'] = the_df["Sample"].str.replace("_p", "", regex=False)
 merged_grouped = the_df.groupby("Sample")
 
-# Example: Replace 'grouped' and 'merged_grouped' with your actual grouped DataFrames
+# Example: Replace 'grouped' and 'merged_grouped' with actual grouped DataFrames
 samples = set([sample for sample, _ in grouped] + [sample for sample, _ in merged_grouped])
 
-# Define your custom colors for each sample
+# Define custom colors for each sample
 custom_colors = {'CHM13.illumina': "#154CAC", 'CHM13.Hifi': "#EF476F", 'CHM13.ONT': "#118AB2", "ASHG-C063_R1.AVITI": "#06D6A0" , "CHM13.10x":"#FFD166"}
 
 # Initialize a figure with a specific size
@@ -73,4 +73,4 @@ plt.grid(False)
 plt.tight_layout()
 plt.legend(loc="upper left")
 
-plt.savefig("Figure_1e.svg", format="svg", dpi=300)
+plt.savefig("Figure_2e.svg", format="svg", dpi=300)
