@@ -23,15 +23,16 @@ inv_cs <- tibble(read_length = numeric(), inv_cs = numeric(), run = character())
 
 files <- list.files(pattern = 'SRR[[:digit:]]*.rd')
 n_runs <- length(files)
-index = 1
+index <- 1
+run_names <- c('D1 (Vipera latastei)', 'D2 (Amazona ochrocephala)', 'D3 (Ascaphus truei)', 'D4 (Gallus gallus)')
 for (file in files) {
   rdFile <- generateRdFile(file)
   df <- tibble(read_length = rdFile$lengths, 
                    read_quality = rdFile$qualities)
   run <- strsplit(basename(file), '[.]')[[1]][1]
-  df$run <- paste0("D", index)
+  df$run <- run_names[index]
   df_icdf <- icdf(df$read_length)
-  df_icdf$run <- paste0("D", index)
+  df_icdf$run <- run_names[index]
   reads <- rbind(reads, df)
   inv_cs <- rbind(inv_cs, df_icdf)
   cat(printRdSummary(rdFile))
@@ -42,10 +43,15 @@ for (file in files) {
 ### Violin Plot
 violin <- ggplot(reads, aes(x = run, y = read_length/1000, fill = run)) +
   geom_violin() +
-  scale_x_discrete(name = ("Run")) +
+  scale_x_discrete(name = ("Run"),
+                   labels = c('D1', 'D2', 'D3', 'D4')) +
   scale_y_continuous(name = ("Read Length (kbp)"),
                      labels = scales::label_comma()) +
-  scale_fill_manual(guide = "none", values = palette) +
+  scale_fill_manual(guide = "none", values = palette) + 
+  theme(
+    axis.title = element_text(family = "Arial", size = 10),
+    axis.text = element_text(family = "Arial", size = 9)
+  ) +
   theme_bw()
 
 ### Read lengths
@@ -58,6 +64,10 @@ read_lengths <- ggplot(reads, aes(x = read_length/1000, fill = run)) +
   scale_y_continuous(name = "Count", labels = scales::label_comma(),
                      expand = expansion(mult = c(0, 0.05))) +
   scale_fill_manual(guide = "none", values = palette) +
+  theme(
+    axis.title = element_text(family = "Arial", size = 10),
+    axis.text = element_text(family = "Arial", size = 9)
+  ) +
   theme_bw() 
 
 ### Inverse cumulative distribution plot
@@ -70,6 +80,10 @@ icd <- ggplot(inv_cs, aes(read_length/1000, inv_cs_gb, color = run)) +
   scale_y_continuous(name = "Cumulative yield (Gbp)",
                      expand = expansion(mult = c(0.05, 0.05))) +
   scale_color_manual(name = "Run", values = palette) +
+  theme(
+    axis.title = element_text(family = "Arial", size = 10),
+    axis.text = element_text(family = "Arial", size = 9)
+  ) +
   theme_bw() 
 
 ### Read lengths vs average quality
@@ -87,6 +101,10 @@ g <- reads_by_avg_quality %>%
                      breaks = scales::breaks_width(10),
                      labels = scales::label_comma()) +
   scale_y_continuous(name = ("Average Read Quality")) +
+  theme(
+    axis.title = element_text(family = "Arial", size = 10),
+    axis.text = element_text(family = "Arial", size = 9)
+  ) +
   theme_bw() 
 
 # Stitch 4 plots together
@@ -94,5 +112,5 @@ library(patchwork)
 violin + read_lengths + icd + g +
   plot_layout(guides = 'collect') &
   theme(legend.position = 'top')
-ggsave('Figure_3.png', width = 10, height = 6.5)
+ggsave('Figure_3.png')
 
