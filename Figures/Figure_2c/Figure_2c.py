@@ -99,5 +99,5 @@ for ax in g.axes.flat:
     ax.set_xticks([1.5,10.5,20.5,30.5,40.5,50.5])  
     ax.set_xticklabels(np.arange(0, 50 + 1, 10)) 
     plt.rcParams['svg.fonttype'] = 'none'
-plt.savefig('Quality.svg', bbox_inches='tight')
+plt.savefig('Figure_2c.svg', bbox_inches='tight')
 
