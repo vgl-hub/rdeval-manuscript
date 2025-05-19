@@ -112,5 +112,5 @@ library(patchwork)
 violin + read_lengths + icd + g +
   plot_layout(guides = 'collect') &
   theme(legend.position = 'top')
-ggsave('Figure_3.png')
+ggsave('Figure_1.png', width = 10, height = 6.5)
 
