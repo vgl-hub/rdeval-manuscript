@@ -65,4 +65,4 @@ for ax, species_class in zip(axs.flat, pd.unique(merged_hifi['Class'])):
             x = 'Coverage', y = 'Contig N50 (Mb)', scatter = False, truncate = False, line_kws = dict(color='#000000'),
             ax = ax
     )
-plt.savefig('Figure_2c.svg')
+plt.savefig('Figure_3c.svg')
